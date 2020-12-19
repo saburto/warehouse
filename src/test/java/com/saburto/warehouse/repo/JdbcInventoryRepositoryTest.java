@@ -10,25 +10,34 @@ import java.util.Map;
 import com.saburto.warehouse.domain.entities.Article;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Testcontainers
+@Tag("integration-test")
 public class JdbcInventoryRepositoryTest {
 
     private JdbcInventoryRepository repo;
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    @Container
+    private static final MySQLContainer MY_SQL_CONTAINER = new MySQLContainer("mysql:5.7.22");
+
     @BeforeEach
     void setup() throws Exception {
 
-
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;mode=MySQL");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("sa");
+        dataSource.setDriverClassName(MY_SQL_CONTAINER.getDriverClassName());
+        dataSource.setUrl(MY_SQL_CONTAINER.getJdbcUrl());
+        dataSource.setUsername(MY_SQL_CONTAINER.getUsername());
+        dataSource.setPassword(MY_SQL_CONTAINER.getPassword());
+
 
         jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
