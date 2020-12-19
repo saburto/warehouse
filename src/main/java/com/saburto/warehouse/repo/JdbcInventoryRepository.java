@@ -1,6 +1,5 @@
 package com.saburto.warehouse.repo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,7 +7,6 @@ import java.util.stream.Collectors;
 import com.saburto.warehouse.domain.entities.Article;
 import com.saburto.warehouse.domain.services.InventoryRepository;
 
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -23,8 +21,6 @@ public class JdbcInventoryRepository implements InventoryRepository {
 
     @Override
     public void upsertAll(List<Article> articles) {
-
-
 
         var params = articles.stream()
             .map(a -> Map.of("id", a.getId(),

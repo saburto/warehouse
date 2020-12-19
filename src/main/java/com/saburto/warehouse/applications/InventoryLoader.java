@@ -17,5 +17,4 @@ public class InventoryLoader {
         repo.upsertAll(articles);
     }
 
-
 }
