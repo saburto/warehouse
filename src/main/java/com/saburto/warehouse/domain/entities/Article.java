@@ -2,6 +2,7 @@ package com.saburto.warehouse.domain.entities;
 
 public class Article {
 
+    public static final Article ZERO_STOCK = new Article(0, null, 0);
     private final int id;
     private final String name;
     private final long stock;

@@ -1,5 +1,7 @@
 package com.saburto.warehouse.repo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,6 +36,15 @@ public class JdbcInventoryRepository implements InventoryRepository {
         jdbcTemplate.batchUpdate("insert into Article values(:id, :name, :stock) on duplicate key update name=:name, stock=:stock",
                                  params.toArray(param));
 
+    }
+
+    @Override
+    public List<Article> findArticleInventory() {
+        return jdbcTemplate.query("select art_id, name, stock from Article", this::toArticle);
+    }
+
+    private Article toArticle(ResultSet result, int rowNum) throws SQLException {
+        return new Article(result.getInt("art_id"), result.getString("name"), result.getLong("stock"));
     }
 
 }

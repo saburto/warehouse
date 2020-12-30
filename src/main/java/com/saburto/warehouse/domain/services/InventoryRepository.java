@@ -8,4 +8,6 @@ public interface InventoryRepository {
 
     void upsertAll(List<Article> articles);
 
+    List<Article> findArticleInventory();
+
 }

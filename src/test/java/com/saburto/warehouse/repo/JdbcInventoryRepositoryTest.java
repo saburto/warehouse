@@ -44,6 +44,7 @@ public class JdbcInventoryRepositoryTest {
         String schema = Files.readString(Path.of(getClass().getResource("/schema.sql").toURI()));
 
         jdbcTemplate.update(schema, Map.of());
+        jdbcTemplate.update("delete from Article", Map.of());
 
         repo = new JdbcInventoryRepository(jdbcTemplate);
     }
@@ -73,6 +74,17 @@ public class JdbcInventoryRepositoryTest {
                                                 Map.of("id", 5), Integer.class);
 
         assertThat(stock).isEqualTo(100);
+
+    }
+
+    @Test
+    void find_all_inventory() {
+
+        repo.upsertAll(List.of(new Article(1, "abc", 100), new Article(2, "dfg", 1000)));
+
+        var inventory = repo.findArticleInventory();
+
+        assertThat(inventory).hasSize(2);
 
     }
 
