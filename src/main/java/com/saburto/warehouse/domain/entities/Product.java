@@ -1,43 +1,69 @@
 package com.saburto.warehouse.domain.entities;
 
+import static java.util.stream.Collectors.toList;
+import java.util.List;
 import java.util.Map;
-import java.util.function.ToLongFunction;
-import com.saburto.warehouse.domain.entities.ProductDefinition.ArticleDefinition;
 
 public class Product {
 
-    private final String name;
     private final long stock;
+    private final ProductDefinition definition;
+    private final List<Article> articles;
 
     public Product(ProductDefinition definition, Map<Integer, Article> articles) {
-        this.name = definition.getName();
-        this.stock = calculateStock(definition, articles);
+        this.definition = definition;
+
+        this.articles = definition.getContainigArticleIds().stream()
+            .map(a -> articles.getOrDefault(a, Article.ofNoStock(a)))
+            .collect(toList());
+
+        this.stock = calculateStock();
     }
 
-    private long calculateStock(ProductDefinition definition, Map<Integer, Article> articles) {
+    private Product(ProductDefinition definition, List<Article> articles) {
+        this.definition = definition;
+        this.articles = articles;
+        this.stock = calculateStock();
+    }
 
-        return definition.getContainigArticles()
-            .stream()
-            .mapToLong(divideStockByNecessaryAmount(articles))
+    private long calculateStock() {
+        return articles.stream()
+            .mapToLong(a -> a.getStock() / definition.amountArticle(a.getId()))
             .min()
             .orElse(0);
     }
 
-    private ToLongFunction<ArticleDefinition> divideStockByNecessaryAmount(Map<Integer, Article> articles) {
-        return d -> getArticleStock(articles, d.getId()) / d.getAmount();
-    }
-
-    private long getArticleStock(Map<Integer, Article> articles, int id) {
-        return articles.getOrDefault(id, Article.ZERO_STOCK).getStock();
-    }
-
     public String getName() {
-        return name;
+        return this.definition.getName();
     }
 
     public long getStock() {
         return stock;
     }
 
+    public Product sell() {
 
+        if (!hasStock()) {
+            throw new NoStockAvailableException(getName());
+        }
+
+        var newArticles = articles.stream()
+            .map(a -> a.sell(definition.amountArticle(a.getId())))
+            .collect(toList());
+
+        return new Product(definition, newArticles);
+    }
+
+    private boolean hasStock() {
+        return stock > 0;
+    }
+
+    public static class NoStockAvailableException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        public NoStockAvailableException(String name) {
+            super("No available stock for " + name);
+        }
+    }
 }

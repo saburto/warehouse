@@ -3,6 +3,7 @@ package com.saburto.warehouse.applications;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import java.util.List;
+import java.util.Map;
 import com.saburto.warehouse.domain.entities.Article;
 import com.saburto.warehouse.domain.entities.Product;
 import com.saburto.warehouse.domain.entities.ProductDefinition;
@@ -78,8 +79,7 @@ public class CatalogRetrieverTest {
     }
 
     private ProductDefinition newProductDefinition() {
-        var artid = new ProductDefinition.ArticleDefinition(1, 1);
-        return new ProductDefinition("table a", List.of(artid));
+        return new ProductDefinition("table a", Map.of(1, 1));
     }
 
 }

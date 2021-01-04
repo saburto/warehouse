@@ -1,13 +1,14 @@
 package com.saburto.warehouse.domain.entities;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ProductDefinition {
 
     private final String name;
-    private final List<ArticleDefinition> containingArticles;
+    private final Map<Integer, Integer> containingArticles;
 
-    public ProductDefinition(String name, List<ArticleDefinition> containingArticles) {
+    public ProductDefinition(String name, Map<Integer, Integer> containingArticles) {
         this.name = name;
         this.containingArticles = containingArticles;
     }
@@ -16,25 +17,15 @@ public class ProductDefinition {
         return name;
     }
 
-    public List<ArticleDefinition> getContainigArticles() {
-        return containingArticles;
+    public int amountArticle(int id) {
+        return containingArticles.getOrDefault(id, 0);
     }
 
-    public static class ArticleDefinition {
-        private final int id;
-        private final int amount;
+    public Set<Integer> getContainigArticleIds() {
+        return containingArticles.keySet();
+    }
 
-        public ArticleDefinition(int id, int amount) {
-          this.id = id;
-          this.amount = amount;
-        }
-
-        public int getId() {
-          return id;
-        }
-
-        public int getAmount() {
-          return amount;
-        }
+    public Map<Integer, Integer> getArticlesAmount() {
+        return Map.copyOf(containingArticles);
     }
 }

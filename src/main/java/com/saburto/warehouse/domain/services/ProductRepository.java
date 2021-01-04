@@ -9,4 +9,6 @@ public interface ProductRepository {
 
     List<ProductDefinition> findProductDefinitions();
 
+    ProductDefinition getProducDefinition(String name);
+
 }

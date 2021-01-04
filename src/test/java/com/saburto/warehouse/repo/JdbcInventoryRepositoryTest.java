@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import com.saburto.warehouse.domain.entities.Article;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -85,6 +85,72 @@ public class JdbcInventoryRepositoryTest {
         var inventory = repo.findArticleInventory();
 
         assertThat(inventory).hasSize(2);
+
+    }
+
+    @Test
+    void find_inventory_of_one_article() {
+
+        repo.upsertAll(List.of(new Article(1, "abc", 100), new Article(2, "dfg", 1000)));
+
+        var mapInventory = repo.findInventoryOf(Set.of(1));
+
+        assertThat(mapInventory).hasSize(1)
+            .hasEntrySatisfying(1, v -> {
+                    assertThat(v.getStock()).isEqualTo(100);
+                });
+
+    }
+
+    @Test
+    void find_inventory_of_two_articles() {
+
+        repo.upsertAll(List.of(new Article(1, "abc", 100), new Article(2, "dfg", 1000)));
+
+        var mapInventory = repo.findInventoryOf(Set.of(1, 2));
+
+        assertThat(mapInventory).hasSize(2)
+            .hasEntrySatisfying(1, v -> {
+                    assertThat(v.getStock()).isEqualTo(100);
+                })
+            .hasEntrySatisfying(2, v -> {
+                    assertThat(v.getStock()).isEqualTo(1000);
+                });
+
+    }
+
+
+    @Test
+    void remove_from_stock() {
+
+        repo.upsertAll(List.of(new Article(1, "abc", 100), new Article(2, "dfg", 1000)));
+
+
+        repo.removeFromStock(Map.of(1, 50));
+
+        var mapInventory = repo.findInventoryOf(Set.of(1));
+
+        assertThat(mapInventory).hasSize(1).hasEntrySatisfying(1, v -> {
+            assertThat(v.getStock()).isEqualTo(50);
+        });
+
+    }
+
+
+    @Test
+    void remove_from_stock_two_articles() {
+
+        repo.upsertAll(List.of(new Article(1, "abc", 100), new Article(2, "dfg", 1000)));
+
+        repo.removeFromStock(Map.of(1, 50, 2, 200));
+
+        var mapInventory = repo.findInventoryOf(Set.of(1, 2));
+
+        assertThat(mapInventory).hasSize(2).hasEntrySatisfying(1, v -> {
+            assertThat(v.getStock()).isEqualTo(50);
+        }).hasEntrySatisfying(2, v -> {
+            assertThat(v.getStock()).isEqualTo(800);
+        });
 
     }
 

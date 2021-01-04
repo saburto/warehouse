@@ -2,7 +2,6 @@ package com.saburto.warehouse.domain.entities;
 
 public class Article {
 
-    public static final Article ZERO_STOCK = new Article(0, null, 0);
     private final int id;
     private final String name;
     private final long stock;
@@ -23,6 +22,14 @@ public class Article {
 
     public long getStock() {
         return stock;
+    }
+
+    public Article sell(int amountArticle) {
+        return new Article(id, name, stock - amountArticle);
+    }
+
+    public static Article ofNoStock(int id) {
+        return new Article(id, null, 0);
     }
 
 }
