@@ -2,8 +2,6 @@ package com.saburto.warehouse.repo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,40 +10,14 @@ import com.saburto.warehouse.domain.entities.Article;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
 @Tag("integration-test")
-public class JdbcInventoryRepositoryTest {
+public class JdbcInventoryRepositoryTest extends AbstractMysqlContainerBaseTest {
 
     private JdbcInventoryRepository repo;
-    private NamedParameterJdbcTemplate jdbcTemplate;
-
-    @Container
-    private static final MySQLContainer MY_SQL_CONTAINER = new MySQLContainer("mysql:5.7.22");
 
     @BeforeEach
     void setup() throws Exception {
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-        dataSource.setDriverClassName(MY_SQL_CONTAINER.getDriverClassName());
-        dataSource.setUrl(MY_SQL_CONTAINER.getJdbcUrl());
-        dataSource.setUsername(MY_SQL_CONTAINER.getUsername());
-        dataSource.setPassword(MY_SQL_CONTAINER.getPassword());
-
-
-        jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-
-        String schema = Files.readString(Path.of(getClass().getResource("/schema.sql").toURI()));
-
-        jdbcTemplate.update(schema, Map.of());
-        jdbcTemplate.update("delete from Article", Map.of());
-
         repo = new JdbcInventoryRepository(jdbcTemplate);
     }
 

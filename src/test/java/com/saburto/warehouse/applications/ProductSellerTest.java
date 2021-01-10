@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.Map;
+import java.util.Optional;
 import com.saburto.warehouse.domain.entities.Article;
 import com.saburto.warehouse.domain.entities.ProductDefinition;
 import com.saburto.warehouse.domain.services.InventoryRepository;
@@ -32,8 +33,7 @@ public class ProductSellerTest {
     void setup() {
         seller = new ProductSeller(productRepository, inventoryRepository);
 
-        when(productRepository.getProducDefinition(anyString())).thenReturn(mock(ProductDefinition.class));
-        when(inventoryRepository.findInventoryOf(anySet())).thenReturn(Map.of());
+        when(productRepository.getProducDefinition(anyString())).thenReturn(Optional.of(mock(ProductDefinition.class)));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ProductSellerTest {
         var inventory = Map.of(1, new Article(1, "a", 3), 2, new Article(2, "b", 1));
 
 
-        when(productRepository.getProducDefinition("table a")).thenReturn(productDefinition);
+        when(productRepository.getProducDefinition("table a")).thenReturn(Optional.of(productDefinition));
         when(inventoryRepository.findInventoryOf(anySet())).thenReturn(inventory);
 
         seller.sell("table a");
@@ -58,6 +58,17 @@ public class ProductSellerTest {
         assertThatThrownBy(() -> seller.sell("no-stock-table"))
             .isInstanceOf(RuntimeException.class)
             .hasMessageContaining("No available stock for");
+
+    }
+
+    @Test
+    void throw_exception_product_not_found() {
+
+        when(productRepository.getProducDefinition(anyString()))
+            .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> seller.sell("no-stock-table"))
+            .isInstanceOf(NoProductFoundException.class);
 
     }
 

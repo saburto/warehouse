@@ -1,6 +1,7 @@
 package com.saburto.warehouse.domain.services;
 
 import java.util.List;
+import java.util.Optional;
 import com.saburto.warehouse.domain.entities.ProductDefinition;
 
 public interface ProductRepository {
@@ -9,6 +10,6 @@ public interface ProductRepository {
 
     List<ProductDefinition> findProductDefinitions();
 
-    ProductDefinition getProducDefinition(String name);
+    Optional<ProductDefinition> getProducDefinition(String name);
 
 }

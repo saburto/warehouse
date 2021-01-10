@@ -18,7 +18,7 @@ public class ProductSeller {
     @Transactional
     public void sell(String name) {
 
-        var definition = productRepository.getProducDefinition(name);
+        var definition = productRepository.getProducDefinition(name).orElseThrow(() -> new NoProductFoundException(name));
         var inventory = inventoryRepository.findInventoryOf(definition.getContainigArticleIds());
 
         var product = new Product(definition, inventory);
