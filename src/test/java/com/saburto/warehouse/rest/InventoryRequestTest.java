@@ -9,7 +9,8 @@ import javax.validation.Validator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.saburto.warehouse.rest.requests.ArticleRequest;
+import com.saburto.warehouse.rest.requests.InventoryRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

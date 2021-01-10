@@ -1,4 +1,4 @@
-package com.saburto.warehouse;
+package com.saburto.warehouse.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.io.IOException;
@@ -38,7 +38,7 @@ class LoadInventoryTests {
         headers.setContentType(MediaType.APPLICATION_JSON);
         var request = new HttpEntity<String>(inventoryFile, headers);
 
-        var response = restTemplate.postForEntity(baseUrl + "/article/inventory/bulk", request, String.class);
+        var response = restTemplate.postForEntity(baseUrl + "/articles/inventory/bulk", request, String.class);
 
 
         assertThat(response.getStatusCodeValue()).isEqualTo(200);

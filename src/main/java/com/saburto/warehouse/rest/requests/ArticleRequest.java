@@ -1,14 +1,19 @@
-package com.saburto.warehouse.rest;
+package com.saburto.warehouse.rest.requests;
 
+import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.saburto.warehouse.domain.entities.Article;
+import org.springframework.lang.NonNull;
 
 public class ArticleRequest {
 
-    private final int artId;
+    @NonNull
+    private final Integer artId;
+    @NotBlank
     private final String name;
-    private final long stock;
+    @NonNull
+    private final Long stock;
 
     @JsonCreator
     public ArticleRequest(@JsonProperty("art_id") int artId,

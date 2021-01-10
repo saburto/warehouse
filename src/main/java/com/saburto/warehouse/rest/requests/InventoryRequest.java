@@ -1,4 +1,4 @@
-package com.saburto.warehouse.rest;
+package com.saburto.warehouse.rest.requests;
 
 import static java.util.stream.Collectors.toList;
 

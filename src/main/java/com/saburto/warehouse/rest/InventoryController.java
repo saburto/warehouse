@@ -3,6 +3,7 @@ package com.saburto.warehouse.rest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.saburto.warehouse.applications.InventoryLoader;
+import com.saburto.warehouse.rest.requests.InventoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/article/inventory")
+@RequestMapping("/articles/inventory")
 @Validated
 public class InventoryController {
 

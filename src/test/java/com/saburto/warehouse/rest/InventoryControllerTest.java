@@ -8,7 +8,8 @@ import java.util.List;
 
 import com.saburto.warehouse.applications.InventoryLoader;
 import com.saburto.warehouse.domain.entities.Article;
-
+import com.saburto.warehouse.rest.requests.ArticleRequest;
+import com.saburto.warehouse.rest.requests.InventoryRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
