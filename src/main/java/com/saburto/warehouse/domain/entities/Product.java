@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Product {
 
-    private final long stock;
+    private final int stock;
     private final ProductDefinition definition;
     private final List<Article> articles;
 
@@ -26,9 +26,9 @@ public class Product {
         this.stock = calculateStock();
     }
 
-    private long calculateStock() {
+    private int calculateStock() {
         return articles.stream()
-            .mapToLong(a -> a.getStock() / definition.amountArticle(a.getId()))
+            .mapToInt(a -> a.getStock() / definition.amountArticle(a.getId()))
             .min()
             .orElse(0);
     }
@@ -37,7 +37,7 @@ public class Product {
         return this.definition.getName();
     }
 
-    public long getStock() {
+    public int getStock() {
         return stock;
     }
 

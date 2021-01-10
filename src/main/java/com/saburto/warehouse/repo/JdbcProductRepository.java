@@ -32,7 +32,7 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public List<ProductDefinition> findProductDefinitions() {
-        var productMap = jdbcTemplate.queryForStream("select p.name, c.art_id, c.amount from Product p inner join Containing_Articles c on c.name_product = p.name",
+        var productMap = jdbcTemplate.queryForStream("select p.name name, c.art_id id, c.amount amount from Product p inner join Containing_Articles c on c.name_product = p.name",
                                                      Map.of(), this::toDefinition)
             .collect(Collectors.groupingBy(p -> p.getName()));
 
@@ -47,7 +47,7 @@ public class JdbcProductRepository implements ProductRepository {
     public Optional<ProductDefinition> getProducDefinition(String name) {
 
         var productMap = jdbcTemplate.queryForStream(
-                "select p.name, c.art_id, c.amount from Product p inner join Containing_Articles c on c.name_product = p.name where p.name = :name",
+                "select p.name name, c.art_id id, c.amount amount from Product p inner join Containing_Articles c on c.name_product = p.name where p.name = :name",
                 Map.of("name", name), this::toDefinition).collect(Collectors.groupingBy(p -> p.getName()));
 
         return productMap.values().stream()
@@ -56,7 +56,7 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     private ProductDefinition toDefinition(ResultSet rs, int rowNum) throws SQLException {
-        return new ProductDefinition(rs.getString("p.name"), Map.of(rs.getInt("c.art_id"), rs.getInt("c.amount")));
+        return new ProductDefinition(rs.getString("name"), Map.of(rs.getInt("id"), rs.getInt("amount")));
     }
 
 

@@ -4,9 +4,9 @@ public class Article {
 
     private final int id;
     private final String name;
-    private final long stock;
+    private final int stock;
 
-    public Article(int id, String name, long stock) {
+    public Article(int id, String name, int stock) {
         this.id = id;
         this.name = name;
         this.stock = stock;
@@ -20,7 +20,7 @@ public class Article {
         return name;
     }
 
-    public long getStock() {
+    public int getStock() {
         return stock;
     }
 

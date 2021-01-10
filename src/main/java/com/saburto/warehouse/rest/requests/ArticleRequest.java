@@ -13,18 +13,18 @@ public class ArticleRequest {
     @NotBlank
     private final String name;
     @NonNull
-    private final Long stock;
+    private final Integer stock;
 
     @JsonCreator
     public ArticleRequest(@JsonProperty("art_id") int artId,
                           @JsonProperty("name") String name,
-                          @JsonProperty("stock") long stock) {
+                          @JsonProperty("stock") Integer stock) {
         this.artId = artId;
         this.name = name;
         this.stock = stock;
     }
 
-    public int getArtId() {
+    public Integer getArtId() {
         return artId;
     }
 
@@ -32,7 +32,7 @@ public class ArticleRequest {
         return name;
     }
 
-    public long getStock() {
+    public Integer getStock() {
         return stock;
     }
 

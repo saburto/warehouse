@@ -36,7 +36,7 @@ public class InventoryRequestTest {
             .hasSize(1)
             .first()
             .extracting(ArticleRequest::getArtId, ArticleRequest::getName, ArticleRequest::getStock)
-            .contains(10, "product1", 10L);
+            .contains(10, "product1", 10);
     }
 
 

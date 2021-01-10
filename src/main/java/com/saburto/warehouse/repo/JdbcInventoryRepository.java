@@ -48,7 +48,7 @@ public class JdbcInventoryRepository implements InventoryRepository {
     }
 
     private Article toArticle(ResultSet result, int rowNum) throws SQLException {
-        return new Article(result.getInt("art_id"), result.getString("name"), result.getLong("stock"));
+        return new Article(result.getInt("art_id"), result.getString("name"), result.getInt("stock"));
     }
 
     @Override

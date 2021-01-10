@@ -43,7 +43,7 @@ public class InventoryControllerTest {
         assertThat(articles)
             .hasSize(1).first()
             .extracting(Article::getId, Article::getName, Article::getStock)
-            .contains(1, "product1", 10L);
+            .contains(1, "product1", 10);
     }
 
 }

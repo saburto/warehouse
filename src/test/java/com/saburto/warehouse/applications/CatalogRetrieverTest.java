@@ -55,7 +55,7 @@ public class CatalogRetrieverTest {
         assertThat(catalog.getProducts()).isNotEmpty()
             .first()
             .extracting(Product::getName, Product::getStock)
-            .contains("table a", 0L);
+            .contains("table a", 0);
     }
 
 
@@ -75,7 +75,7 @@ public class CatalogRetrieverTest {
         assertThat(catalog.getProducts()).isNotEmpty()
             .first()
             .extracting(Product::getName, Product::getStock)
-            .contains("table a", 10L);
+            .contains("table a", 10);
     }
 
     private ProductDefinition newProductDefinition() {
