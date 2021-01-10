@@ -14,7 +14,9 @@ import com.saburto.warehouse.domain.services.InventoryRepository;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class JdbcInventoryRepository implements InventoryRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import com.saburto.warehouse.domain.entities.Article;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface InventoryRepository {
 
     void upsertAll(List<Article> articles);
