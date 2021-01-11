@@ -32,4 +32,16 @@ public class ProductSeller {
         inventoryRepository.removeFromStock(definition.getArticlesAmount());
     }
 
+
+    public static class NoProductFoundException extends RuntimeException {
+        private static final long serialVersionUID = 1L;
+
+
+        public NoProductFoundException(String name) {
+            super(String.format("Product [%s] not found", name));
+        }
+
+
+    }
+
 }

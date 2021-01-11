@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.Map;
 import java.util.Optional;
+import com.saburto.warehouse.applications.ProductSeller.NoProductFoundException;
 import com.saburto.warehouse.domain.entities.Article;
 import com.saburto.warehouse.domain.entities.ProductDefinition;
 import com.saburto.warehouse.domain.services.InventoryRepository;

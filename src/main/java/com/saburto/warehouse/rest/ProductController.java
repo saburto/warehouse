@@ -2,7 +2,7 @@ package com.saburto.warehouse.rest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import com.saburto.warehouse.applications.NoProductFoundException;
+import com.saburto.warehouse.applications.ProductSeller.NoProductFoundException;
 import com.saburto.warehouse.applications.ProductLoader;
 import com.saburto.warehouse.applications.ProductSeller;
 import com.saburto.warehouse.domain.entities.Product.NoStockAvailableException;
