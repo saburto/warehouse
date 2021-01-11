@@ -1,6 +1,6 @@
 # Warehouse
 
-Warehouse project for interview assessment
+Warehouse project
 
 ## Assumptions
 
