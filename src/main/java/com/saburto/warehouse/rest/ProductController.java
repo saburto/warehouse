@@ -46,9 +46,9 @@ public class ProductController {
         try {
             seller.sell(name);
         } catch (NoProductFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found, with name:" + name);
         } catch (NoStockAvailableException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Not stock available");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Not stock available for:" + name);
         }
     }
 
