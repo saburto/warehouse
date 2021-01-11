@@ -11,7 +11,7 @@ import org.testcontainers.containers.MySQLContainer;
 
 public class AbstractMysqlContainerBaseTest {
 
-    static final MySQLContainer MY_SQL_CONTAINER;
+    public static final MySQLContainer MY_SQL_CONTAINER;
 
     static {
         MY_SQL_CONTAINER = new MySQLContainer("mysql:5.7.22");

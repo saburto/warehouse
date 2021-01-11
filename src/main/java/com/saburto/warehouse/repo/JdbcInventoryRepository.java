@@ -53,7 +53,7 @@ public class JdbcInventoryRepository implements InventoryRepository {
 
     @Override
     public Map<Integer, Article> findInventoryOf(Set<Integer> containigArticleIds) {
-        var list = jdbcTemplate.query("select art_id, name, stock from Article where art_id in (:ids)",
+        var list = jdbcTemplate.query("select art_id, name, stock from Article where art_id in (:ids) for update",
                            Map.of("ids", containigArticleIds),
                            this::toArticle);
 
